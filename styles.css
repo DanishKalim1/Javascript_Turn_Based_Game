@@ -1,0 +1,154 @@
+h1,h3{
+	color:black;
+	text-align : center;
+}
+body {
+  font-family: Tahoma;
+}
+
+#mario{
+  widows: 100px;
+  width: 100px;
+  display: block;
+  margin: 0 auto;
+}
+#turtle{
+  widows: 100px;
+  width: 100px;
+   display: block;
+  margin: 0 auto;
+
+}
+.left{
+  background: skyblue;
+  width: 250px;
+  margin-right: 30px;
+  margin-top: 50px;
+}
+.right{
+  background: pink;
+  width: 250px;
+  margin-left: 30px;
+  margin-top: 50px;
+}
+.main {
+  border: 2px solid black;
+  border-radius: 7px;
+  display: grid;
+  max-width: 720px;
+  max-height: 700px;
+  position: relative;
+  grid-template: repeat(10, 1fr)/repeat(10, 1fr);
+  margin: 10px auto;
+  padding-right: 1px;
+  padding-left: 1px;
+  background-image: url("images/ground2.jpg");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+}
+.grid-item {
+  outline: 1px solid rgba(0,233,0,0.3);
+  
+  border-radius: 7px;
+  width: 70px;
+  height: 70px;
+
+}
+.weapon-1 {
+  background-image:url("images/daga.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 40px 40px;
+  margin: auto;
+}
+
+.weapon-2 {
+  background-image:url("images/espada.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 70px 70px;
+  margin: auto;
+}
+
+.weapon-3 {
+  background-image:url("images/hacha.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 70px 70px;
+  margin: auto;
+}
+
+.weapon-4 {
+  background-image:url("images/lanza.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 70px 70px;
+  margin: auto;
+}
+.player-1 {
+  background-image: url("images/mario.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 60px 70px;
+  margin: auto;
+}
+
+.player-2 {
+  background-image: url("images/turtle.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 50px 70px;
+  margin: auto;
+}
+.frostbite{
+  background-image: url("images/hielo.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 70px 70px;
+  margin: auto;
+  z-index: 1;
+}
+
+.shield{
+  background-image: url("images/shield.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 70px 70px;
+  margin: auto;
+}
+
+.block {
+  background-image: url("images/block1.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: 60px 70px;
+  margin: auto;
+}
+.possible {
+  background: red;
+  transition: 0.1s ease-in;
+  cursor: pointer;
+}
+.possible:hover{
+  background: rgba(56, 139, 91, 0.7);
+}
+
+
+#button {
+  display: block;
+  margin: 0 auto;
+  padding: 25px;
+  background: #121212;
+  color: #fff;
+  margin: 0 auto;
+  width: 300px;
+  text-align: center;
+  margin-bottom: 25px;
+  transition: all 0.2s ease;
+ 
+}
+
+#button:hover {
+  background: gray;
+}
