@@ -10,26 +10,37 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body >
-          <div class="row">
-	      <div class="col-md-2 left">
+          <div class="row main-div">
+	      <div class="col-md-2 left" >
 	      	<h1>Player 1</h1>
 	      	<img src="images/mario.png" id="mario">
-	      	<h3>Score</h3>
+	      	<h3>Life: <span id="player1-health"></span></h3>
+	      	<h3>Weapon: <span id="player1-weapon"></span></h3>
+	      	<img class="weapon-display" id="w-display-1" src="" />
+	      	
 	      </div>
 			<div class="main col-md-10">
               
 	         </div>
 
-	       <div class="right col-md-2">
+	       <div class="right col-md-2" >
 	      	<h1>Player 2</h1>
 	      	<img src="images/turtle.png" id="turtle">
-	      	<h3>Score</h3>
+	      	<h3>Life: <span id="player2-health"></span></h3>
+	      	<h3>Weapon: <span id="player2-weapon"></span></h3>
+	      	<img class="weapon-display" id="w-display-2" src="" />
+	      	
 	      </div>     
-			<divc class="col-md-12">
+			<div class="col-md-12">
               <button id="button" onclick="generateGame();">Start Game</button>
 			</div>
+			 <div class="row war text-center">
+         	<h1>Lets start the Battle</h1>
+         	<div class="col-md-6" id="player1-box" ></div>
+         	<div class="col-md-6" id="player2-box"></div>
+         </div>
 			</div>
-
+        
  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
