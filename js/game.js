@@ -27,6 +27,22 @@
       },
     ];
 //Players
+
+const Player = function(id){
+this.id=id;
+this.position={
+x:0,
+y:0
+};
+this.life= 100;
+this.hasWeapon= false;
+this.currentWeapon= weapons[0];
+this.isDefending=false;
+}
+const player1 = new Player("player-1");
+const player2 = new Player("player-2");
+
+/*
 const player1 ={
 id: "player-1",
 position:{
@@ -36,6 +52,7 @@ y:0
 life: 100,
 hasWeapon: false,
 currentWeapon: weapons[0],
+isDefending: false
 };
 const player2 ={
 id: "player-2",
@@ -46,8 +63,9 @@ y:0
 life: 100,
 hasWeapon: false,
 currentWeapon: weapons[0],
+isDefending: false
 };
-
+*/
 
 const generateRandomNum = () => Math.floor(Math.random() * 10);
 
@@ -55,7 +73,7 @@ const generateRandomNum = () => Math.floor(Math.random() * 10);
 (function() {
  for (let i = 0; i < 10; i++) {
    for (let j = 0; j < 10; j++) {
-    $('.main').append('<div class="grid-item" data-y='+i+' data-x='+j+'>'+i+' '+j+' </div>');
+    $('.main').append('<div class="grid-item" data-y='+i+' data-x='+j+'> </div>');
    }
   }
  }
@@ -115,7 +133,9 @@ element.removeClass("player-1");
 element.removeClass("player-2");
 element.removeClass("possible");
 element.removeClass("unavailable");
+fightMode = false;
 statReset();
+
 });
 currentPlayer = player1;
 
@@ -512,7 +532,7 @@ function checkWeapon(block, player){
     }
 }
 
-
+//show current weapon
   function weaponDisplay(player){
    if (player === player1){
   
@@ -531,24 +551,27 @@ function checkWeapon(block, player){
    function displayStats(player) {
     const weapon = player.currentWeapon.name;
     const health = player.life;
-    
+    const damage = player.currentWeapon.damage;
     if (player === player1){
       document.getElementById("player1-weapon").innerHTML = weapon;
       document.getElementById("player1-health").innerHTML = health;
-      
+      document.getElementById("player1-damage").innerHTML = damage;
     } else {
       document.getElementById("player2-weapon").innerHTML = weapon;
       document.getElementById("player2-health").innerHTML = health;
-      
+      document.getElementById("player2-damage").innerHTML = damage;
     }
   }
 // reset all stats
   function statReset(){
+   
+
     document.getElementById("player1-weapon").innerHTML = "";
     document.getElementById("player1-health").innerHTML = "";
-    
+    document.getElementById("player1-damage").innerHTML = "";
     document.getElementById("player2-weapon").innerHTML = "";
     document.getElementById("player2-health").innerHTML = "";
+    document.getElementById("player2-damage").innerHTML = "";
     
   }
 
@@ -566,23 +589,123 @@ function checkWeapon(block, player){
     const yPosition = Math.abs(Number(player2.position.y) - Number(player1.position.y));
     return (((xPosition == 0) && ( yPosition == 1))||((yPosition == 0) && (xPosition == 1)))
   }
-
-    // fight
+  
+  // Logic to take care of the turns
+  let playerTurn = true; 
   function handleFight(){
-  if (faceToface()){
-   $( ".main" ).hide();
-   $( ".left" ).hide();
-   $( ".right" ).hide();
-   $( "#button" ).hide();
-   $( ".war" ).show();
-   $( ".left" ).appendTo( "#player1-box" ).show();
-   $( ".right" ).appendTo( "#player2-box" ).show();
-   if (currentPlayer === player1){
-   $( ".left" ).css("background-color", "green");
-          } 
-   if (currentPlayer === player2){
-    $( ".right" ).css("background-color", "green");
-        
+    if (faceToface()){
+      $( "#start-button" ).css( "display", "none" );
+      $( ".main" ).css( "display", "none" );
+      $( ".left" ).appendTo( "#player1-box").show();
+      $( ".right" ).appendTo( "#player2-box" ).show();
+       $( ".war" ).show();
+        if (playerTurn){
+          
+          $( ".right" ).css("backgroundColor", "pink");
+          $( ".fightButton1" ).css("display", "inline-block");
+          $( ".fightButton2" ).css("display", "none");
+        } 
+        if (!playerTurn){
+          
+           $( ".left" ).css("backgroundColor", "skyblue");
+          $( ".fightButton2" ).css("display", "inline-block");
+          $( ".fightButton1" ).css("display", "none");
+        }
     }
   }
-}
+
+  // Logic  attacks
+  function attackFunc(){
+  
+    handleFight();
+    if (!playerTurn){
+      if (player2.isDefending){
+        player2.life = player2.life  - (player1.currentWeapon.damage / 2);
+        displayStats(player2);
+      } else {
+        player2.life = player2.life  - player1.currentWeapon.damage;
+        displayStats(player2);
+      }
+ 
+    } else {
+      if (player1.isDefending){
+        player1.life = player1.life  - (player2.currentWeapon.damage / 2);
+        displayStats(player1);
+      } else {
+        player1.life = player1.life  - player2.currentWeapon.damage;
+        displayStats(player1);
+      }
+      
+    }
+    player1.isDefending = false;
+    player2.isDefending = false;
+    playerTurn = !playerTurn;
+    gameOver();
+  } 
+
+  // Defense
+  function defendFunc(){
+  
+    handleFight();
+    if (!playerTurn){
+      player1.isDefending = true;
+      displayStats(player2);
+    } else {
+      player2.isDefending = true;
+      displayStats(player1);
+    }
+    playerTurn = !playerTurn;
+    gameOver();
+  } 
+
+  // Check  players health .
+  function gameOver(){
+    if (player1.life <= 0){
+        player1.life = 0;
+        $('#p2').css("backgroundColor","green");
+         $('.left').css("backgroundColor","red");
+         
+        $('#p2').text("Turtle Win");
+        $( ".fightButton1" ).css( "display", "none" );
+        $( ".fightButton2" ).css( "display", "none" );
+
+        displayStats(player1);
+        $('.left').fadeOut(2000);
+        
+        
+       
+    }
+    if (player2.life <= 0){
+      player2.life = 0;
+      $('#p1').css("backgroundColor","green");
+      $('.right').css("backgroundColor","red");
+      
+      $('#p1').text("Mario Win");
+      $( ".fightButton1" ).css( "display", "none" );
+      $( ".fightButton2" ).css( "display", "none" );
+      
+      displayStats(player2);
+      $('.right').fadeOut(2000);
+      
+    }
+  }
+  
+ /*----- Attack and Fight DOM ---------*/
+  // attack
+  const attackBtn1 = document.getElementById('attack1');
+  const attackBtn2 = document.getElementById('attack2');
+  attackBtn1.onclick = function() {
+    attackFunc();
+  }
+  attackBtn2.onclick = function() {
+    attackFunc();
+  }
+  // defend
+  const defendBtn1 = document.getElementById('defend1');
+  const defendBtn2 = document.getElementById('defend2');
+  defendBtn1.onclick = function() {
+    defendFunc();
+  }
+  defendBtn2.onclick = function() {
+    defendFunc();
+  }

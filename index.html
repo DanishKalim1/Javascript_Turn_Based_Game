@@ -12,32 +12,44 @@
 <body >
           <div class="row main-div">
 	      <div class="col-md-2 left" >
-	      	<h1>Player 1</h1>
+	      	<h1 id="p1">Player 1</h1>
 	      	<img src="images/mario.png" id="mario">
 	      	<h3>Life: <span id="player1-health"></span></h3>
 	      	<h3>Weapon: <span id="player1-weapon"></span></h3>
 	      	<img class="weapon-display" id="w-display-1" src="" />
-	      	
+	      	<h3>Damage: <span id="player1-damage"></span></h3>
+           <button id="attack1" class="fightButton1 attackButton">Attack</button>
+           <button id="defend1" class="fightButton1 defendButton">Defend</button>
+          
 	      </div>
 			<div class="main col-md-10">
               
 	         </div>
 
 	       <div class="right col-md-2" >
-	      	<h1>Player 2</h1>
+	      	<h1 id="p2">Player 2</h1>
 	      	<img src="images/turtle.png" id="turtle">
 	      	<h3>Life: <span id="player2-health"></span></h3>
 	      	<h3>Weapon: <span id="player2-weapon"></span></h3>
 	      	<img class="weapon-display" id="w-display-2" src="" />
+	      	 <h3>Damage: <span id="player2-damage"></span></h3>
+            
+           <button id="attack2" class="fightButton2 attackButton">Attack</button>
+            <button id="defend2" class="fightButton2 defendButton">Defend</button>
 	      	
 	      </div>     
 			<div class="col-md-12">
-              <button id="button" onclick="generateGame();">Start Game</button>
+              <button id="start-button" onclick="generateGame();">Start Game</button>
 			</div>
 			 <div class="row war text-center">
          	<h1>Lets start the Battle</h1>
-         	<div class="col-md-6" id="player1-box" ></div>
-         	<div class="col-md-6" id="player2-box"></div>
+         	<div class="col-md-6" id="player1-box" >
+
+           
+         	</div>
+         	<div class="col-md-6" id="player2-box">
+         		
+         	</div>
          </div>
 			</div>
         

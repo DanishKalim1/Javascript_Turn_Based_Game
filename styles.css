@@ -8,13 +8,13 @@ body {
 
 #mario{
   widows: 100px;
-  width: 100px;
+  width: 80px;
   display: block;
   margin: 0 auto;
 }
 #turtle{
   widows: 100px;
-  width: 100px;
+  width: 80px;
    display: block;
   margin: 0 auto;
 
@@ -140,7 +140,7 @@ body {
 }
 
 
-#button {
+#start-button {
   display: block;
   margin: 0 auto;
   padding: 25px;
@@ -182,4 +182,19 @@ text-align: center;
 img{
   display:block;
     margin:auto;
+}
+.fightButton1,
+.fightButton2{
+  font-size: 15px;
+  display: none;
+}
+
+.defendButton{
+  background: coral;
+  
+}
+
+.attackButton{
+  background: maroon;
+  
 }
