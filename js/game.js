@@ -19,7 +19,7 @@ const weapons = [{
   image: "images/axe.png"
  },
  {
-  name: "Viking Sword",
+  name: "Killer",
   damage: 30,
   className: "weapon-4",
   image: "images/viking_sword.png"
