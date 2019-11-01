@@ -44,13 +44,13 @@ const generateRandomNum = () => Math.floor(Math.random() * 10);
 (function() {
  for (let i = 0; i < 10; i++) {
   for (let j = 0; j < 10; j++) {
-   $('.main').append('<div class="grid-item" data-y=' + i + ' data-x=' + j + '> </div>');
+   $('.main').append('<div class="grid" data-y=' + i + ' data-x=' + j + '> </div>');
   }
  }
 })()
 // Loop to elements to display them on the board
-function generate(func, times) {
- for (let i = 0; i < Number(times); i++) {
+function generate(func, time) {
+ for (let i = 0; i < time; i++) {
   func();
  }
 }
@@ -58,7 +58,7 @@ function generate(func, times) {
 function placeElements(className) {
  const random_x = generateRandomNum();
  const random_y = generateRandomNum();
- $('.grid-item').each(function() {
+ $('.grid').each(function() {
   const element = $(this);
   if (this.dataset['x'] == random_x && this.dataset['y'] == random_y) {
    if (!(this.classList.contains("unavailable"))) {
@@ -86,7 +86,7 @@ function placeElements(className) {
 let currentPlayer;
 // Clean all the board
 function reset() {
- $('.grid-item').each(function() {
+ $('.grid').each(function() {
   const element = $(this);
   element.removeClass("block");
   element.removeClass("weapon");
@@ -141,11 +141,11 @@ function generateGame() {
 }
 
 function playerMove() {
- $('.grid-item').click(function() {
+ $('.grid').click(function() {
   const element = $(this);
   if (element.hasClass("possible")) {
-   $('.grid-item').removeClass(currentPlayer.id);
-   $('.grid-item').removeClass("possible");
+   $('.grid').removeClass(currentPlayer.id);
+   $('.grid').removeClass("possible");
    element.addClass(currentPlayer.id);
    currentPlayer.position.x = this.dataset['x'];
    currentPlayer.position.y = this.dataset['y'];
@@ -173,14 +173,14 @@ function divOccupied(element) {
 }
 //path for players
 function pathHighlight() {
- $('.grid-item').each(function() {
+ $('.grid').each(function() {
   const element = $(this);
   const block = this;
   if (checkDistance(currentPlayer, block) && !divOccupied(element)) {
    element.addClass("possible");
   }
  });
- $('.grid-item').click(function() {
+ $('.grid').click(function() {
   const element = $(this);
   const block = this;
   if (element.hasClass("possible")) {
@@ -197,7 +197,7 @@ function pathHighlight() {
   }
  });
  //Remove possiable path if there is obstacle.
- $('.grid-item').each(function() {
+ $('.grid').each(function() {
   const element = $(this);
   const block = this;
   if (checkDistance(currentPlayer, block) && (block.dataset['x'] > currentPlayer.position.x)) {
@@ -355,7 +355,7 @@ function replaceWeapon(element, player) {
  } else if (element.hasClass("weapon-3")) {
   element.removeClass("weapon-3");
   element.addClass(playerWeapon.className);
-  currentPlayer.currentWeapon = weapons[2];
+  player.currentWeapon = weapons[2];
   weaponDisplay(player);
  } else if (element.hasClass("weapon-4")) {
   element.removeClass("weapon-4");
@@ -384,25 +384,25 @@ function weaponDisplay(player) {
 }
 function displayStats(player) {
  const weapon = player.currentWeapon.name;
- const health = player.life;
+ const life = player.life;
  const damage = player.currentWeapon.damage;
  if (player === player1) {
   document.getElementById("player1-weapon").innerHTML = weapon;
-  document.getElementById("player1-health").innerHTML = health;
+  document.getElementById("player1-life").innerHTML = life;
   document.getElementById("player1-damage").innerHTML = damage;
  } else {
   document.getElementById("player2-weapon").innerHTML = weapon;
-  document.getElementById("player2-health").innerHTML = health;
+  document.getElementById("player2-life").innerHTML = life;
   document.getElementById("player2-damage").innerHTML = damage;
  }
 }
 // reset all status
 function statReset() {
  document.getElementById("player1-weapon").innerHTML = "";
- document.getElementById("player1-health").innerHTML = "";
+ document.getElementById("player1-life").innerHTML = "";
  document.getElementById("player1-damage").innerHTML = "";
  document.getElementById("player2-weapon").innerHTML = "";
- document.getElementById("player2-health").innerHTML = "";
+ document.getElementById("player2-life").innerHTML = "";
  document.getElementById("player2-damage").innerHTML = "";
 }
 
@@ -411,12 +411,8 @@ function handleWeapon(element, player) {
 }
 // players facing eachother
 function faceToface() {
- console.log(parseInt(player1.position.x) - parseInt(player2.position.x))
- console.log(parseInt(player1.position.y) - parseInt(player2.position.y))
  const xPosition = Math.abs(Number(player1.position.x) - Number(player2.position.x));
  const yPosition = Math.abs(Number(player1.position.y) - Number(player2.position.y));
- console.log(xPosition)
- console.log(yPosition)
  return (((xPosition == 0) && (yPosition == 1)) || ((yPosition == 0) && (xPosition == 1)))
 }
 // Logic to take care of the turns
@@ -429,6 +425,7 @@ function handleFight() {
  $(".left").appendTo("#player1-box").show();
  $(".right").appendTo("#player2-box").show();
  $(".war").show();
+ $("#game-tag-line").css("display", "none");
  if (Turn % 2 == 0) {
   $(".left").css("border", "8px solid green");
   $(".right").css("border", "8px solid black");
@@ -446,22 +443,22 @@ function handleFight() {
  }
 }
 // Logic attacks
-function attackFunc() {
+function playerAttack() {
  handleFight();
  if (playerTurn) {
   if (player2.isDefending) {
-   player2.life = player2.life - (player1.currentWeapon.damage / 2);
+   player2.life -=  (player1.currentWeapon.damage * .5);
    displayStats(player2);
   } else {
-   player2.life = player2.life - player1.currentWeapon.damage;
+   player2.life -=  player1.currentWeapon.damage;
    displayStats(player2);
   }
  } else {
   if (player1.isDefending) {
-   player1.life = player1.life - (player2.currentWeapon.damage / 2);
+   player1.life -=   (player2.currentWeapon.damage *.5 );
    displayStats(player1);
   } else {
-   player1.life = player1.life - player2.currentWeapon.damage;
+   player1.life -=  player2.currentWeapon.damage;
    displayStats(player1);
   }
  }
@@ -471,7 +468,7 @@ function attackFunc() {
  gameOver();
 }
 // Defense
-function defendFunc() {
+function playerDefend() {
  handleFight();
  if (playerTurn) {
   player1.isDefending = true;
@@ -483,7 +480,7 @@ function defendFunc() {
  playerTurn = !playerTurn;
  gameOver();
 }
-// Check players health .
+// Check players life .
 function gameOver() {
  if (player1.life <= 0) {
   player1.life = 0;
@@ -510,31 +507,29 @@ function gameOver() {
 
 }
 //Attack 
-const attackBtn1 = document.getElementById('attack1');
-const attackBtn2 = document.getElementById('attack2');
-attackBtn1.onclick = function() {
- console.log(attackBtn1);
+const playerAttack1 = document.getElementById('player-1-attack');
+const playerAttack2 = document.getElementById('player-2-attack');
+playerAttack1.onclick = function() {
+ console.log(playerAttack1);
  Turn++;
- attackFunc();
+ playerAttack();
 }
-attackBtn2.onclick = function() {
- console.log(attackBtn2);
+playerAttack2.onclick = function() {
+ console.log(playerAttack2);
  Turn++;
- attackFunc();
+ playerAttack();
 }
 // Defend
-const defendBtn1 = document.getElementById('defend1');
-const defendBtn2 = document.getElementById('defend2');
-defendBtn1.onclick = function() {
+const playerDefend1 = document.getElementById('player-1-defend');
+const playerDefend2 = document.getElementById('player-2-defend');
+playerDefend1.onclick = function() {
  Turn++;
- defendFunc();
+ playerDefend();
 }
-defendBtn2.onclick = function() {
+playerDefend2.onclick = function() {
  Turn++;
- defendFunc();
+ playerDefend();
 }
 function refreshPage(){
-        if(confirm("Are you sure, want to refresh?")){
-          location.reload();
-        }       
-      }
+ location.reload();
+}

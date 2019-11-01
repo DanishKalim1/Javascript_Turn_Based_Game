@@ -12,27 +12,28 @@
         <div class="container">
             <div class="main-div">
                 <div class="row ">
+                    <h1 id="game-tag-line">Born To Win</h1>
                     <div class="col-md-2  left">
                         <h1 id="p1">Player 1</h1>
                         <img src="images/mario_blue.png" id="mario_blue_img">
-                        <h3>Life: <span id="player1-health"></span></h3>
+                        <h3>Life: <span id="player1-life"></span></h3>
                         <h3>Weapon: <span id="player1-weapon"></span></h3>
                         <img class="weapon-display" id="w-display-1" src="" />
                         <h3>Damage: <span id="player1-damage"></span></h3>
-                        <button id="attack1" class="fightButton1 attackButton">Attack</button>
-                        <button id="defend1" class="fightButton1 defendButton">Defend</button>
+                        <button id="player-1-attack" class="fightButton1 attackButton">Attack</button>
+                        <button id="player-1-defend" class="fightButton1 defendButton">Defend</button>
                     </div>
                     <div class="main col-md-10 ">
                     </div>
                     <div class="right col-md-2 ">
                         <h1 id="p2">Player 2</h1>
                         <img src="images/mario_red.png" id="mario_red_img">
-                        <h3>Life: <span id="player2-health"></span></h3>
+                        <h3>Life: <span id="player2-life"></span></h3>
                         <h3>Weapon: <span id="player2-weapon"></span></h3>
                         <img class="weapon-display" id="w-display-2" src="" />
                         <h3>Damage: <span id="player2-damage"></span></h3>
-                        <button id="attack2" class="fightButton2 attackButton">Attack</button>
-                        <button id="defend2" class="fightButton2 defendButton">Defend</button>
+                        <button id="player-2-attack" class="fightButton2 attackButton">Attack</button>
+                        <button id="player-2-defend" class="fightButton2 defendButton">Defend</button>
                     </div>
                     <div class="col-md-12 ">
                         <button id="start-button" onclick="generateGame();">Start Game</button>
